@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Profile from './Profile.js';
+import api from '../Utils/api.js';
+import Repositories from './Repositories.js'
 
 import {
   StyleSheet,
@@ -9,7 +11,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-var styles = {
+var styles = StyleSheet.create({
   container: {
     marginTop: 65,
     flex: 1
@@ -20,9 +22,9 @@ var styles = {
   buttonText: {
     fontSize: 24,
     color: 'white',
-    alignText: 'center'
+    alignSelf: 'center'
   }
-};
+});
 
 class Dashboard extends Component {
 
@@ -54,7 +56,14 @@ class Dashboard extends Component {
   }
 
   goToRepos(){
-
+    api.getRepos(this.props.userInfo.login)
+    .then((repos) => {
+        this.props.navigator.push({
+          title: `Public Repos of ${this.props.userInfo.name}`,
+          component: Repositories,
+          passProps: {userInfo: this.props.userInfo, repos: repos}
+        })
+      })
   }
 
   goToNotes(){

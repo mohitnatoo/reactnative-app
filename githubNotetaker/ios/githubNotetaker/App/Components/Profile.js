@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Badge from './Badge.js';
+var Badge = require('./Badge');
+var Separator =  require('../Helpers/Separator');
 
 import {
   StyleSheet,
@@ -49,6 +50,7 @@ class Profile extends Component {
               <Text style={styles.rowTitle}> {this.getRowTitle(item)} </Text>
               <Text style={styles.rowContent}> {userInfo[item]} </Text>
             </View>
+            <Separator/>
           </View>
         );
       }
