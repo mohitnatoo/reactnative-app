@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Profile from './Profile.js';
 import api from '../Utils/api.js';
 import Repositories from './Repositories.js'
+import Notes from './Notes.js'
 
 import {
   StyleSheet,
@@ -61,13 +62,27 @@ class Dashboard extends Component {
         this.props.navigator.push({
           title: `Public Repos of ${this.props.userInfo.name}`,
           component: Repositories,
-          passProps: {userInfo: this.props.userInfo, repos: repos}
+          passProps: {
+            userInfo: this.props.userInfo,
+            repos: repos
+          }
         })
       })
   }
 
   goToNotes(){
-
+    api.getNotes(this.props.userInfo.login)
+      .then((res) => {
+        res = res || {};
+        this.props.navigator.push({
+          title: `Notes about ${this.props.userInfo.name}`,
+          component: Notes,
+          passProps: {
+            userInfo: this.props.userInfo,
+            notes: res
+          }
+        })
+      })
   }
 
   render(){
